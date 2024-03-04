@@ -1,0 +1,30 @@
+created this employee folder using cli command : nest g resource employee
+Answered 2 question : 
+    What transport layer do you use? REST API
+    Would you like to generate CRUD entry points? Yes
+
+
+
+Provider scopes : determine how instances of a particular provider (service, controller, etc.) are created and managed within the application
+    i)singleton scope : 
+        * In singleton scope, a single instance of the provider is created and shared across the entire application.
+        * This means that every time the provider is injected into a module, component, or controller, the same instance is reused.
+        * To define a provider as a singleton, you can use the @Injectable() decorator without any additional configuration
+    ii)Request scope : 
+        * In request scope, a new instance of the provider is created for each incoming HTTP request. This is particularly useful when you want to maintain state specific to each request.
+        * To define a provider with request scope, you can use the @Injectable({ scope: Scope.REQUEST }) decorator:
+        NOTE : constructor(@Inject(REQUEST) private request: Request) {}
+            =>This is commonly used when you want to access the HTTP request object within a NestJS provider or controller
+            =>http://localhost:3000/scope : test it
+    iii)Transient scope : 
+        * In transient scope, a new instance of the provider is created each time it is injected. This means that every injection point receives a new and independent instance of the provider.
+        * To define a provider with transient scope, you can use the @Injectable({ scope: Scope.TRANSIENT }) decorator:
+
+Scope Hierarchy Rules:
+    * A request-scoped provider within a module is created for each incoming HTTP request.
+    * A module-scoped provider is created when the module is instantiated and lives as long as the module is active.
+    * A singleton-scoped provider is created once for the entire application.
+
+InQuirer Provider : 
+    Used to inject a custom provider or service into your application and use it across different modules
+

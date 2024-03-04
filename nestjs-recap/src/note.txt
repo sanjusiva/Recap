@@ -1,0 +1,46 @@
+Custom Providers
+
+value providers : useValue (Non-class-based-providers)
+   * directly provide a specific value as a dependency.
+   * used when you have a constant value or an object that doesn't require instantiation
+   * http://localhost:3000/uv  :  for testing
+
+class providers : useClass
+    * used when you want to provide an instance of a class as a dependency
+    * syntax providers: [CatsService] is short-hand for 
+        providers: [
+            {
+                provide: CatsService,
+                useClass: CatsService,
+            },
+        ];
+
+factory provider: useFactory (Non-service based providers)
+    * used when you need to instantiate a value or perform some dynamic logic to provide a dependency.
+    * The useFactory property specifies the factory function (createConfig in this case) responsible for creating the value.
+    * http://localhost:3000/uf  :  for testing
+
+alias providers : useExisting
+    * used when you want to reuse an existing provider (service) with a different token
+    * the provider class inside the useExisting field need to be in providers
+    * http://localhost:3000/ue
+
+Export custom provider :
+  i) exporting using the token => eg :  exports:['MY_CONFIG']
+  ii) export with the full provider object => eg :  exports:[AppService]
+
+
+Rate Limiting:
+    * Rate limiting is used to restrict users to hit an endpoint for a limited amount of time.
+    * ThrottlerModule.forRoot([{
+      ttl : 1000,//(millisecond)
+      limit : 1,
+    }])
+    * setting up a rate limit of 1 requests per 1 seconds
+    * {
+    "statusCode": 429,
+    "message": "ThrottlerException: Too Many Requests"
+}
+    * if you want to Skip some modules from Rate limiting then you need to specify SkipThrottle()
+    * @SkipThrottle(false) : Rate limiting is applied to this route.
+    * @Throttle(3, 60) : Override default configuration for Rate limiting and duration.
